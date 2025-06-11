@@ -138,12 +138,13 @@ class HuffmanCompression {
       
       // Si llegamos a una hoja, añadir el carácter al resultado
       if (node.char !== null) {
-        decodedText += node.char;
+        
+        decodedText += (node.char === '\n' ? '<br />' : node.char);
         // Volver a la raíz para el siguiente carácter
         node = this.root;
       }
     }
-    
+    console.log(decodedText);
     return decodedText;
   }
   
