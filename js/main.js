@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }));
       
       // Redirigir a la página de compresión Huffman
-      window.location.href = 'arbol_huffman/pages/huffman.html';
+      window.location.href = './pages/huffman.html';
     }, 300);
   });
   
