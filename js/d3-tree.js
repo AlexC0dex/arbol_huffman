@@ -29,13 +29,6 @@ function convertToD3Tree(node, pathCode = "") {
 
 // Función principal para visualizar el árbol usando D3
 function visualizeHuffmanTree(root, containerId) {
-  // Si no hay D3, mostrar un mensaje de error
-  if (typeof d3 === 'undefined') {
-    console.error('D3.js no está cargado. Por favor, incluye la biblioteca D3.');
-    document.getElementById(containerId).innerHTML = '<p style="color: red; text-align: center;">Error: D3.js no está disponible para visualizar el árbol.</p>';
-    return;
-  }
-  
   // Convertir el árbol de Huffman al formato que necesita D3
   const d3Data = convertToD3Tree(root);
   
@@ -129,7 +122,6 @@ function visualizeHuffmanTree(root, containerId) {
   const totalNodes = treeData.descendants().length;
   const maxDepth = treeData.height;
   
-  console.log(`Árbol de Huffman: ${totalNodes} nodos, profundidad ${maxDepth}`);
   
   // Determinar si necesitamos un modo compacto
   const isLargeTree = totalNodes > 30 || maxDepth > 5;
@@ -178,7 +170,7 @@ function visualizeHuffmanTree(root, containerId) {
     .attr("stroke", "#94a3b8")
     .attr("stroke-width", isLargeTree ? 1 : 2)
     .attr("d", d3.linkVertical()
-      .x(d => d.x)
+      .x(d => d.x+width/2)
       .y(d => d.y)
     );
   
@@ -188,7 +180,7 @@ function visualizeHuffmanTree(root, containerId) {
     .enter()
     .append("g")
     .attr("class", d => `node ${d.data.isChar ? 'leaf-node' : 'internal-node'} ${isLargeTree ? 'compact' : ''}`)
-    .attr("transform", d => `translate(${d.x},${d.y})`);
+    .attr("transform", d => `translate(${d.x+width/2},${d.y})`);
   
   // Añadir círculo para cada nodo con tamaño adaptativo
   nodeGroups.append("circle")
@@ -271,7 +263,7 @@ function visualizeHuffmanTree(root, containerId) {
     // Etiquetas minimalistas para árboles grandes
     bitLabels.append("text")
       .attr("class", "bit-label-compact")
-      .attr("x", d => (d.source.x + d.target.x) / 2)
+      .attr("x", d => (d.source.x + d.target.x) / 2 + width/2)
       .attr("y", d => (d.source.y + d.target.y) / 2 - 2)
       .attr("text-anchor", "middle")
       .style("font-size", "9px")
