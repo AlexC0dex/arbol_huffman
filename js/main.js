@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       feedback.classList.add('processing-complete');
       feedback.innerHTML = `
         <div class="processing-check">✓</div>
-        <p>¡Archivo listo para compresión!</p>
+        <p>¡Archivo listo para ${ currentMode === 'compress' ? 'compresión' : 'descompresión' }!</p>
       `;
     }, 1500);
   }
