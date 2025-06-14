@@ -79,8 +79,8 @@
         <h2>Vista previa del texto codificado</h2>
         <pre id="encodedTextPreview" class="encoded-preview"></pre>
       </div>
-      
-      <input type="text" id="decodeText" placeholder="Ingresa texto codificado para decodificar" class="decode-input">
+
+      <textarea id="decodeText" placeholder="Ingresa codigo binario a decodificar" class="decode-input" oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"></textarea>
       <button id="decodeBtn" class="action-button decode-button">Decodificar texto</button>
       
       <div class="action-buttons">
