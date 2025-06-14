@@ -358,16 +358,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Función para mostrar el resultado de la decodificación
 function showDecodedResult(text) {
+  resultContainer = document.querySelector(".decode-result")
+  if(!resultContainer){
     resultContainer = document.createElement('div');
     resultContainer.className = 'decode-result';
     
+
     // Insertar después del botón de decodificación
+    
     const decodeBtn = document.getElementById('decodeBtn');
     if (decodeBtn && decodeBtn.parentNode) {
       decodeBtn.parentNode.insertBefore(resultContainer, decodeBtn.nextSibling);
-
+    }
   }
-  
   // Actualizar contenido
   resultContainer.innerHTML = `<div class="decode-result-text">${text}</div>`;
   resultContainer.style.display = 'block';
