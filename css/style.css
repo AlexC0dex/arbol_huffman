@@ -25,6 +25,7 @@ body {
   position: relative;
   overflow: hidden;
   color: var(--text-dark);
+  overflow-y: auto;
 }
 
 /* Fondo mejorado temático de Huffman con efecto parallax */

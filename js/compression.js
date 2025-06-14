@@ -253,7 +253,33 @@ function updateUI(result, fileName) {
     const preview = result.encodedText.substring(0, previewLength);
     encodedTextPreview.textContent = preview + (result.encodedText.length > previewLength ? '...' : '');
   }
-  
+
+  let isExpanded = false;
+  const encodedFullText = document.querySelector(".complete-text")
+  encodedFullText.addEventListener("click", () => {
+    if (isExpanded) {
+        const preview = result.encodedText.substring(0, 200);
+        encodedTextPreview.textContent = preview + (result.encodedText.length > 200 ? '...' : '');
+        encodedFullText.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+          Mostrar texto completo
+        `;
+        encodedFullText.classList.remove('expanded');
+      } else {
+        encodedTextPreview.textContent = result.encodedText;
+        encodedFullText.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+          Mostrar menos
+        `;
+        encodedFullText.classList.add('expanded');
+      }
+      isExpanded = !isExpanded;
+  })
+
   // Configurar botón de descarga
   const downloadBtn = document.getElementById('downloadBtn');
   if (downloadBtn) {
