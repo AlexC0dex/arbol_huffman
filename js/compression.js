@@ -89,7 +89,8 @@ class HuffmanCompression {
     
     return this.root;
   }
-  
+
+  // Generar codigos haciendo recorrido al árbol
   generateCodes(node, code) {
     if (node === null) return;
     
@@ -104,6 +105,7 @@ class HuffmanCompression {
     this.generateCodes(node.right, code + "1");
   }
   
+  // Para codificar el texto
   encode(text) {
     if (text.length === 0) return '';
     
@@ -120,7 +122,7 @@ class HuffmanCompression {
     return encodedString;
   }
   
-  // Para decodificar el texto comprimido
+  // Para decodificar el texto
   decode(encodedText) {
     if (!encodedText || !this.root) return '';
     if (this.root.char !== null) return this.root.char.repeat(this.root.freq);
@@ -256,14 +258,12 @@ function updateUI(result, fileName) {
   const downloadBtn = document.getElementById('downloadBtn');
   if (downloadBtn) {
     downloadBtn.addEventListener('click', () => {
-      // Crear un objeto con los datos comprimidos y los códigos para decodificar
-      console.log(resultHuffman);
+      // console.log(resultHuffman);
       let compressedData = ``;
       for (const char in resultHuffman.huffmanCodes) {
         compressedData += `${char === '\n' ? '\\n' : char}=${result.huffmanCodes[char]}\n`;
       }
       compressedData += `${result.encodedText}`
-      // Convertir a JSON y crear un blob
       const blob = new Blob([compressedData], {type: 'text/plain'});
       
       // Crear un enlace de descarga
@@ -297,7 +297,6 @@ function updateUI(result, fileName) {
 
 // Añadir manejo para el botón de decodificación
 document.addEventListener('DOMContentLoaded', function() {
-  // Manejar la decodificación de texto
   const decodeBtn = document.getElementById('decodeBtn');
   const decodeInput = document.getElementById('decodeText');
   
@@ -313,7 +312,6 @@ document.addEventListener('DOMContentLoaded', function() {
       decodeBtn.classList.add('loading');
       decodeBtn.textContent = "Decodificando...";
       
-      // Simular proceso (puedes eliminar este setTimeout en producción)
       setTimeout(() => {
         try {
           const decodedText = huffman.decode(inputText);
@@ -334,11 +332,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Función para mostrar el resultado de la decodificación
 function showDecodedResult(text) {
-  // Buscar si ya existe un contenedor de resultados
-  let resultContainer = document.querySelector('.decode-result');
-  
-  // Si no existe, crear uno
-  if (!resultContainer) {
     resultContainer = document.createElement('div');
     resultContainer.className = 'decode-result';
     
@@ -346,7 +339,7 @@ function showDecodedResult(text) {
     const decodeBtn = document.getElementById('decodeBtn');
     if (decodeBtn && decodeBtn.parentNode) {
       decodeBtn.parentNode.insertBefore(resultContainer, decodeBtn.nextSibling);
-    }
+
   }
   
   // Actualizar contenido
@@ -363,7 +356,6 @@ function showDecodedResult(text) {
 
 // Función para mostrar errores de decodificación
 function showDecodeError(message) {
-  // Similar a showDecodedResult pero con estilo de error
   let resultContainer = document.querySelector('.decode-result');
   
   if (!resultContainer) {

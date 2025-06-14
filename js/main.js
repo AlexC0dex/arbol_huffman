@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         console.log("Archivo leído con éxito");
         
-        // Pequeña demora para mejor UX
+        // Pequeña demora para mejorar el UX :)
         setTimeout(() => {
           // Habilitar el botón de continuar cuando el archivo se carga con éxito
           continueButton.disabled = false;
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fileNameDisplay.appendChild(changeFileBtn);
         
         changeFileBtn.addEventListener('click', (e) => {
-          e.stopPropagation(); // Prevenir que el clic se propague al área de carga
+          e.stopPropagation();
           resetFileUpload();
           input.click();
         });
@@ -265,9 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Evento: Clic en el botón continuar
   continueButton.addEventListener('click', () => {
-    // Aquí puedes añadir la lógica para continuar con el proceso
-    console.log("Continuando con el proceso...");
-    
     // Efecto visual al hacer clic
     continueButton.classList.add('clicked');
     
@@ -411,6 +408,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
   document.head.appendChild(style);
   
-  console.log("Inicialización de la aplicación completada");
 });
 
