@@ -34,52 +34,47 @@
   <div class="bit" style="top: 75%; left: 40%; animation-delay: 3s">1</div>
   <div class="bit" style="top: 30%; left: 60%; animation-delay: 4s">0</div>
   
-  <div class="container">
-    <!-- Decoración de código para el contenedor -->
-    <div class="code-decoration" style="top: 10px; right: 20px;">
-      function huffman(text) {
-        // compresión
-      }
-    </div>
-    
-    <h1>Algoritmo de Huffman</h1>
-    <p class="subtitle">Sube un archivo de texto para iniciar la compresión</p>
-    
-    <div class="upload-area" id="uploadArea">
-      <div class="upload-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="17 8 12 3 7 8"></polyline>
-          <line x1="12" y1="3" x2="12" y2="15"></line>
-        </svg>
-      </div>
-      <p id="uploadText">Arrastra y suelta tu archivo aquí o</p>
-      <input type="file" id="fileInput" accept=".txt" />
-      <label for="fileInput" class="file-label">
-        <span>Seleccionar archivo</span>
-      </label>
-      <div id="fileNameDisplay" class="file-name"></div>
+  <div class="flex-container">
+    <div class="process-mode-switch">
+      <button class="mode-button selected" data-mode="compress">Comprimir</button>
+      <button class="mode-button" data-mode="decompress">Descomprimir</button>
     </div>
 
-    <button id="continueButton" class="action-button continue-button" disabled>
-      <span>Continuar con la compresión</span>
-    </button>
-    
-    <div class="huffman-info">
-      <p>El algoritmo de Huffman es una técnica eficiente para la compresión de datos sin pérdidas. Asigna códigos de longitud variable a los caracteres, utilizando menos bits para los caracteres más frecuentes.</p>
+    <div class="container">
+      <!-- Decoración de código para el contenedor -->
+      <div class="code-decoration" style="top: 10px; right: 20px;">
+        function huffman(text) {
+          // compresión
+        }
+      </div>
+      
+      <h1>Algoritmo de Huffman</h1>
+      <p class="subtitle">Sube un archivo de texto para iniciar la compresión</p>
+      
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+        </div>
+        <p id="uploadText">Arrastra y suelta tu archivo aquí o</p>
+        <input type="file" id="fileInput" accept=".txt" />
+        <label for="fileInput" class="file-label">
+          <span>Seleccionar archivo</span>
+        </label>
+        <div id="fileNameDisplay" class="file-name"></div>
+      </div>
+
+      <button id="continueButton" class="action-button continue-button" disabled>
+        <span>Continuar con la compresión</span>
+      </button>
+      
+      <div class="huffman-info">
+        <p>El algoritmo de Huffman es una técnica eficiente para la compresión de datos sin pérdidas. Asigna códigos de longitud variable a los caracteres, utilizando menos bits para los caracteres más frecuentes.</p>
+      </div>
     </div>
   </div>
-  
-  <script>
-    // Código de diagnóstico para depurar cualquier problema
-    console.log("Estado de los elementos DOM:");
-    window.addEventListener('load', function() {
-      console.log("fileInput:", document.getElementById("fileInput"));
-      console.log("continueButton:", document.getElementById("continueButton"));
-      console.log("uploadArea:", document.getElementById("uploadArea"));
-      console.log("fileNameDisplay:", document.getElementById("fileNameDisplay"));
-      console.log("fileLabel:", document.querySelector(".file-label"));
-    });
-  </script>
 </body>
 </html>

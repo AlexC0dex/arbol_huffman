@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const fileNameDisplay = document.getElementById("fileNameDisplay");
   const fileLabel = document.querySelector(".file-label");
   const bgAnimation = document.getElementById("bgAnimation");
+  const uploadText = document.getElementById('uploadText');
   
   // Variables para el manejo de archivos
   let file = null;
@@ -22,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fileType: ''
   };
   
+  // Configurar el modo inicial
+  let currentMode = 'compress';
+
   // Función para crear animación del fondo
   function createBackgroundAnimation() {
     for (let i = 0; i < 30; i++) {
@@ -105,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fileState.fileSize = fileToRead.size;
         fileState.fileType = fileToRead.type;
         
-        console.log("Archivo leído con éxito");
         
         // Pequeña demora para mejorar el UX :)
         setTimeout(() => {
@@ -192,6 +195,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 50);
   }
   
+  // Switch de modos entre comprimir y descomprimir
+  const modeButtons = document.querySelectorAll('.mode-button');
+  const processModeSwitch = document.querySelector('.process-mode-switch');
+  
+  // Función para actualizar la UI basada en el modo
+  function updateModeUI(mode) {
+    // Actualizar colores y estilos según el modo
+    if (mode === 'decompress') {
+      uploadArea.classList.add('decompress-mode');
+      processModeSwitch.classList.add('decompress-active');
+      
+      continueButton.textContent = 'Continuar con la descompresión';
+      uploadText.textContent = 'Arrastra y suelta tu archivo comprimido aquí o';
+      
+      // Cambiar el texto del botón continuar
+      if (continueButton.querySelector('span')) {
+        continueButton.querySelector('span').textContent = 'Continuar con la descompresión';
+      }
+    } else {
+      uploadArea.classList.remove('decompress-mode');
+      processModeSwitch.classList.remove('decompress-active');
+      
+      continueButton.textContent = 'Continuar con la compresión';
+      uploadText.textContent = 'Arrastra y suelta tu archivo aquí o';
+      
+      // Cambiar el texto del botón continuar
+      if (continueButton.querySelector('span')) {
+        continueButton.querySelector('span').textContent = 'Continuar con la compresión';
+      }
+    }
+  }
+
+  // Agregar event listeners a los botones de modo
+  modeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      modeButtons.forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      
+      // Obtener el modo seleccionado
+      currentMode = button.dataset.mode;
+      
+      // Actualizar la UI
+      updateModeUI(currentMode);
+      
+      // Restaurar el estado del input de archivo
+      resetFileUpload();
+    });
+  });
+
   // Función para resetear la subida de archivos
   function resetFileUpload() {
     fileLoaded = false;
@@ -210,6 +262,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (processingElement) {
       processingElement.remove();
     }
+    
+    // Mantener los colores del modo actual
+    updateModeUI(currentMode);
   }
   
   // Evento: Cambio en el input de archivo
@@ -271,15 +326,20 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       continueButton.classList.remove('clicked');
       
-      // Guardar los datos del archivo en localStorage para que estén disponibles en la página de huffman
+      // Guardar los datos del archivo y el modo en localStorage
       localStorage.setItem('fileData', JSON.stringify({
         content: fileState.content,
         fileName: fileState.fileName,
-        fileSize: fileState.fileSize
+        fileSize: fileState.fileSize,
+        mode: currentMode // Guardar el modo seleccionado
       }));
       
-      // Redirigir a la página de compresión Huffman
-      window.location.href = './pages/huffman.html';
+      // Redirigir a la página correspondiente según el modo
+      if (currentMode === 'decompress') {
+        window.location.href = './pages/decompress.html';
+      } else {
+        window.location.href = './pages/huffman.html';
+      }
     }, 300);
   });
   

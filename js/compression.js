@@ -12,171 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 let resultHuffman;
 let huffman;
 
-class HuffmanNode {
-  constructor(char, freq) {
-    this.char = char;
-    this.freq = freq;
-    this.left = null;
-    this.right = null;
-  }
-}
 
-class HuffmanCompression {
-  constructor() {
-    this.root = null;
-    this.codes = {};
-    this.originalSize = 0;
-    this.compressedSize = 0;
-    this.compressionRatio = 0;
-    this.uniqueChars = 0;
-    this.frequency = {}
-  }
-  
-  calculateFrequency(text) {
-    for (let i = 0; i < text.length; i++) {
-      const char = text[i];
-      if (this.frequency[char]) {
-        this.frequency[char]++;
-      } else {
-        this.frequency[char] = 1;
-      }
-    }
-    this.uniqueChars = Object.keys(this.frequency).length;
-  }
-  
-  // Construye el árbol de Huffman basado en las frecuencias
-  buildHuffmanTree(text) {
-    this.calculateFrequency(text);
-    const priorityQueue = [];
-    
-    // Crear nodos para cada carácter
-    for (const char in this.frequency) {
-      priorityQueue.push(new HuffmanNode(char, this.frequency[char]));
-    }
-    
-    // Ordenar por frecuencia
-    priorityQueue.sort((a, b) => a.freq - b.freq);
-    
-    // Construir el árbol
-    while (priorityQueue.length > 1) {
-      // Sacar los dos nodos con menor frecuencia
-      const left = priorityQueue.shift();
-      const right = priorityQueue.shift();
-      
-      // Crear un nuevo nodo interno
-      const newNode = new HuffmanNode(null, left.freq + right.freq);
-      newNode.left = left;
-      newNode.right = right;
-      
-      let inserted = false;
-      for (let i = 0; i < priorityQueue.length; i++) {
-        if (newNode.freq <= priorityQueue[i].freq) {
-          priorityQueue.splice(i, 0, newNode);
-          inserted = true;
-          break;
-        }
-      }
-      if (!inserted) {
-        priorityQueue.push(newNode);
-      }
-    }
-    
-    // La raíz del árbol
-    this.root = priorityQueue[0] || new HuffmanNode('', 0);
-    
-    // Generar códigos para cada carácter
-    this.generateCodes(this.root, "");
-    
-    return this.root;
-  }
-
-  // Generar codigos haciendo recorrido al árbol
-  generateCodes(node, code) {
-    if (node === null) return;
-    
-    if (node.char !== null) {
-      this.codes[node.char] = code || '0';
-      return;
-    }
-    
-    // Recorrer subárbol izquierdo (añadir 0)
-    this.generateCodes(node.left, code + "0");
-    // Recorrer subárbol derecho (añadir 1)
-    this.generateCodes(node.right, code + "1");
-  }
-  
-  // Para codificar el texto
-  encode(text) {
-    if (text.length === 0) return '';
-    
-    let encodedString = "";
-    for (let i = 0; i < text.length; i++) {
-      encodedString += this.codes[text[i]];
-    }
-    
-    this.originalSize = text.length * 8;
-    this.compressedSize = encodedString.length;
-    this.compressionRatio = this.originalSize > 0 ? 
-      ((this.compressedSize / this.originalSize) * 100).toFixed(2) : 0;
-    
-    return encodedString;
-  }
-  
-  // Para decodificar el texto
-  decode(encodedText) {
-    if (!encodedText || !this.root) return '';
-    if (this.root.char !== null) return this.root.char.repeat(this.root.freq);
-    
-    let node = this.root;
-    let decodedText = "";
-    
-    for (let i = 0; i < encodedText.length; i++) {
-      // Moverse por el árbol según el bit actual
-      if (encodedText[i] === '0') {
-        node = node.left;
-      } else {
-        node = node.right;
-      }
-      
-      // Si llegamos a una hoja, añadir el carácter al resultado
-      if (node.char !== null) {
-        
-        decodedText += (node.char === '\n' ? '<br />' : node.char);
-        // Volver a la raíz para el siguiente carácter
-        node = this.root;
-      }
-    }
-    console.log(decodedText);
-    return decodedText;
-  }
-  
-  // Método principal para comprimir
-  compress(text) {
-    if (!text) return {
-      encodedText: '',
-      huffmanCodes: {},
-      originalSize: 0,
-      compressedSize: 0,
-      compressionRatio: 0,
-      tree: null,
-      uniqueChars: 0
-    };
-    
-    this.buildHuffmanTree(text);
-    const encoded = this.encode(text);
-    
-    return {
-      encodedText: encoded,
-      huffmanCodes: this.codes,
-      originalSize: this.originalSize,
-      compressedSize: this.compressedSize,
-      compressionRatio: this.compressionRatio,
-      tree: this.root,
-      uniqueChars: this.uniqueChars,
-      frequency: this.frequency
-    };
-  }
-}
 // Función para iniciar la compresión y mostrar resultados
 function processCompression(fileContent, fileName) {
   // Mostrar sección de carga
@@ -226,7 +62,6 @@ function updateUI(result, fileName) {
   const codesContainer = document.getElementById('huffmanCodesContainer');
   if (codesContainer) {
     let codesHTML = '<div class="codes-grid">';
-    console.log(resultHuffman);
     for (const char in result.huffmanCodes) {
       const displayChar = char === ' ' ? '␣' : 
                          char === '\n' ? '⏎' : 
@@ -287,16 +122,19 @@ function updateUI(result, fileName) {
       // console.log(resultHuffman);
       let compressedData = ``;
       for (const char in resultHuffman.huffmanCodes) {
-        compressedData += `${char === '\n' ? '\\n' : char}=${result.huffmanCodes[char]}\n`;
+        compressedData += `${result.huffmanCodes[char]}${char === '\n' ? '\\n' : 
+                                                        (char === null || char === undefined) ? ' ' : 
+                                                        (char === '0' || char === '1') ? `\\${char}` : char }`;
       }
-      compressedData += `${result.encodedText}`
+      
+      compressedData += `\n${result.encodedText}`
       const blob = new Blob([compressedData], {type: 'text/plain'});
       
       // Crear un enlace de descarga
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = fileName.replace(/\.[^/.]+$/, '') + '.txt';
+      a.download = fileName.replace(/\.[^/.]+$/, '') + '_comprimido.txt';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -372,6 +210,7 @@ function showDecodedResult(text) {
     }
   }
   // Actualizar contenido
+  let formattedText = text.replaceAll('\n', '<br/>')
   resultContainer.innerHTML = `<div class="decode-result-text">${text}</div>`;
   resultContainer.style.display = 'block';
   

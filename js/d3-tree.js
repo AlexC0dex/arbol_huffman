@@ -4,9 +4,9 @@ function convertToD3Tree(node, pathCode = "") {
   
   // Crear objeto en formato que D3 pueda usar
   const d3Node = {
-    name: node.char !== null ? node.char : node.freq.toString(),
+    name: node.char !== null ? node.char : (node.freq!== null ) ? node.freq.toString() : '0',
     isChar: node.char !== null,
-    freq: node.freq,
+    freq: node.freq === null ? 0 : node.freq,
     code: pathCode,
     children: []
   };

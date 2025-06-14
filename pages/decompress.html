@@ -8,13 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/huffman.css">
+  <link rel="stylesheet" href="../css/decompress.css">
   <!-- Incluir D3.js desde CDN -->
   <script src="https://d3js.org/d3.v7.min.js" defer></script>
   <script src="../js/d3-tree.js" defer></script>
   <script src="../js/HuffmanNode.js" defer></script>
   <script src="../js/HuffmanCompression.js" defer></script>
-  <script src="../js/compression.js" defer></script>
+  <script src="../js/decompression.js" defer></script>
 </head>
 <body>
   <div class="bg-animation"></div>
@@ -24,7 +24,7 @@
   <div class="tree-element" style="width: 200px; height: 200px; bottom: 15%; right: 10%;"></div>
   
   <div class="container huffman-container">
-    <h1>Resultados de Compresión</h1>
+    <h1>Resultados de Descompresión</h1>
     <p class="subtitle">Algoritmo de Huffman</p>
     
     <div class="loading-section" id="loadingSection">
@@ -46,15 +46,11 @@
       </div>
       
       <div class="result-card compression-stats">
-        <h2>Estadísticas de Compresión</h2>
+        <h2>Estadísticas de Descompresión</h2>
         <div class="stats-container">
           <div class="stat-item">
-            <div class="stat-value" id="compressionRatio">0%</div>
-            <div class="stat-label">Tasa de compresión</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value" id="compressedSize">0 bytes</div>
-            <div class="stat-label">Tamaño comprimido</div>
+            <div class="stat-value" id="decompressedSize">0 bytes</div>
+            <div class="stat-label">Tamaño descomprimido</div>
           </div>
           <div class="stat-item">
             <div class="stat-value" id="uniqueChars">0</div>
@@ -78,21 +74,18 @@
       </div>
       
       <div class="result-card encoded-text">
-        <h2>Vista previa del texto codificado</h2>
-        <pre id="encodedTextPreview" class="encoded-preview"></pre>
+        <h2>Vista previa del texto decodificado</h2>
+        <pre id="decodedTextPreview" class="encoded-preview"></pre>
         <button class="complete-text" id="showCompleteText">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
-          Mostrar codificación completa
+          Mostrar decodificación completa
         </button>
       </div>
-
-      <textarea id="decodeText" placeholder="Ingresa codigo binario a decodificar" class="decode-input" oninput="this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';"></textarea>
-      <button id="decodeBtn" class="action-button decode-button">Decodificar texto</button>
       
       <div class="action-buttons">
-        <button id="downloadBtn" class="action-button">Descargar archivo comprimido</button>
+        <button id="downloadBtn" class="action-button">Descargar archivo descomprimido</button>
         <button id="backBtn" class="action-button secondary-button">Volver al inicio</button>
       </div>
     </div>
