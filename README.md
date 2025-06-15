@@ -41,7 +41,6 @@ La biblioteca **d3.js** se usa exclusivamente para renderizar y controlar el ár
 
 - Zoom (rueda del ratón o gesto táctil).
 - Desplazamiento (arrastrar el lienzo).
-- Animaciones suaves al expandir o colapsar nodos.
 
 ---
 
