@@ -18,13 +18,13 @@ Una sencilla aplicación web para comprimir y descomprimir archivos de texto (.t
 1. **Clona el repositorio**
 
    ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio.git
-   cd tu-repositorio
+   git clone https://github.com/AlexC0dex/arbol_huffman
+   cd arbol_huffman
    ```
 
-2. **Abre **`` en tu navegador (no requiere servidor local).
+2. **Abre** en tu navegador (no requiere servidor local).
 
-3. **Carga un archivo **``:
+3. **Carga un archivo**:
 
    - Haz clic en "Seleccionar archivo" y elige tu documento de texto.
    - Elige "Comprimir" o "Descomprimir" según tu necesidad.
