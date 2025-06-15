@@ -237,7 +237,7 @@ function visualizeHuffmanTree(root, containerId) {
     bitLabels.append("g")
       .attr("class", "bit-label")
       .attr("transform", d => {
-        const midX = (d.source.x + d.target.x) / 2;
+        const midX = (d.source.x + d.target.x) / 2 + width/2;
         const midY = (d.source.y + d.target.y) / 2;
         return `translate(${midX}, ${midY})`;
       })
